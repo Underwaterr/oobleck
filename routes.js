@@ -1,18 +1,23 @@
-var express = require('express')
-var router = express.Router()
-var superagent = require('superagent')
+let express = require('express')
+let router = express.Router()
+let superagent = require('superagent')
+
+let outside = 'http://oobleck-api.herokuapp.com/submissions'
+let inside  = 'http://localhost:3000/submissions'
 
 // Homepage GET
-router.get('/', (req, res) => {
+router.get('/', (request, response) => {
     superagent
-    .get('http://oobleck-api.herokuapp.com/submissions')
+    .get(inside)
     .end(function(error, data) {
-        var submissions = data.body
-
-        var two = process.env.NON_INTERACTIVE_CLIENT_ID
-        var three = process.env.NON_INTERACTIVE_CLIENT_SECRET
-
-        res.render('index', { submissions: submissions, two: two, three: three })
+        if (error) {
+            //response.render('error', {error: error })
+            response.json(error)
+        }
+        else {
+            let submissions = data.body
+            response.render('index', { submissions: submissions })            
+        }
     })
 })
 
