@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
         var two = process.env.NON_INTERACTIVE_CLIENT_ID
         var three = process.env.NON_INTERACTIVE_CLIENT_SECRET
 
-        res.render('index', { submissions: submissions, one: one, two: two })
+        res.render('index', { submissions: submissions, two: two, three: three })
     })
 })
 
