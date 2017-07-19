@@ -1,0 +1,26 @@
+{
+  "name": "oobleck",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "faucet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Underwaterr/oobleck.git"
+  },
+  "author": "Tyler Lane <gmail.com> (cat-toast.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Underwaterr/oobleck/issues"
+  },
+  "homepage": "https://github.com/Underwaterr/oobleck#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "pug": "^2.0.0-rc.2",
+    "superagent": "^3.5.2"
+  }
+}
