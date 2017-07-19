@@ -11,7 +11,8 @@ router.get('/', (request, response) => {
         .get(inside)
         .end(function(error, data) {
             if (error) {
-                response.render('error', parseError(error))
+                response.send(error)
+                //response.render('error', parseError(error))
             }
             else {
                 let submissions = data.body
