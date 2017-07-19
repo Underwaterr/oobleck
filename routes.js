@@ -2,11 +2,9 @@ let express = require('express')
 let router = express.Router()
 let superagent = require('superagent')
 
+var uri = 'http://localhost:3000/submissions'
 if (process.env.HEROKU) {
-    let uri = 'http://oobleck-api.herokuapp.com/submissions'
-}
-else {
-    let uri = 'http://localhost:3000/submissions'
+    uri = 'http://oobleck-api.herokuapp.com/submissions'
 }
 
 // Homepage GET
