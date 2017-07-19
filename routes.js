@@ -22,8 +22,8 @@ router.get('/', (request, response) => {
 
 let parseError = function(error) {
     return {
-        status: error.status,
-        message: error.response.text
+        status: error.status
+        //message: error.response.text
     }
 }
 
