@@ -8,11 +8,10 @@ let inside  = 'http://localhost:3000/submissions'
 // Homepage GET
 router.get('/', (request, response) => {
     superagent
-        .get(inside)
+        .get(outside)
         .end(function(error, data) {
             if (error) {
-                response.send(error)
-                //response.render('error', parseError(error))
+                response.render('error', parseError(error))
             }
             else {
                 let submissions = data.body
@@ -23,8 +22,8 @@ router.get('/', (request, response) => {
 
 let parseError = function(error) {
     return {
-        status: error.status
-        //message: error.response.text
+        status: error.status,
+        message: error.response.text
     }
 }
 
