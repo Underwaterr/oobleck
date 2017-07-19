@@ -8,11 +8,12 @@ router.get('/', (req, res) => {
     .get('http://oobleck-api.herokuapp.com/submissions')
     .end(function(error, data) {
         var submissions = data.body
-        res.render('index', { submissions: submissions })
+
+        var two = process.env.NON_INTERACTIVE_CLIENT_ID
+        var three = process.env.NON_INTERACTIVE_CLIENT_SECRET
+
+        res.render('index', { submissions: submissions, one: one, two: two })
     })
 })
 
-
-
 module.exports = router
-
