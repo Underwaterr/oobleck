@@ -13,51 +13,21 @@ app.use(express.static('public'))                   // Static file location
 let routes = require('./routes')
 app.use('/', routes)
 
-// The 'process.env.PORT' variable lets the port be set by Heroku
-// If not set, use 8000!
+// The 'PORT' environment variable is set by Heroku
 let port = process.env.PORT || 8000;
 app.listen(port, ()=> { console.log("Server ready! Listening on port " + port) })
 
-
-// Super secret
-if (process.env.HEROKU) {
-	var NON_INTERACTIVE_CLIENT_ID = process.env.NON_INTERACTIVE_CLIENT_ID
-	var NON_INTERACTIVE_CLIENT_SECRET = process.env.NON_INTERACTIVE_CLIENT_SECRET
-}
-else {
-	try {
-		let secret = require('./secret')
-		var NON_INTERACTIVE_CLIENT_ID = secret.NON_INTERACTIVE_CLIENT_ID
-		var NON_INTERACTIVE_CLIENT_SECRET = secret.NON_INTERACTIVE_CLIENT_SECRET
-	}
-	catch(e) {
-		throw 'No auth keys found'
-	}
-}
-
-console.log(NON_INTERACTIVE_CLIENT_SECRET, NON_INTERACTIVE_CLIENT_ID)
-
-let authData = {
-	client_id: NON_INTERACTIVE_CLIENT_ID,
-	client_secret: NON_INTERACTIVE_CLIENT_SECRET,
-	grant_type: 'client_credentials',
-	audience: 'http://oobleck-api.herokuapp.com/'
-}
-
-function getAccessToken(request, response, next) {
-	superagent
-		.post('underwater.auth0.com/oauth/token')
-		.send(authData)
-		.end(function(error, response) {
-			if(request.body.access_token) {
-				res.send("SUCCESS!")
-			}
-			else {
-				res.send(401, 'No thx :/')
-			}
-		})
-}
+var getAccessToken = require('./config/get-access-token')
 
 app.get('/auth', getAccessToken, function(request, response) {
-	res.send("Hello?")
+    superagent
+        .get('oobleck-api.herokuapp.com/submissions')
+        .set('Authorization', 'Bearer ' + request.access_token)
+        .end(function(error, data) {
+            if(data.status == 403){
+                response.status(403).send('403 Forbidden') } 
+            else {
+                response.render('index', { submissions: data.body })
+            }
+        })
 })

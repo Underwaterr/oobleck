@@ -2,31 +2,19 @@ let express = require('express')
 let router = express.Router()
 let superagent = require('superagent')
 
-var uri = 'http://localhost:3000/submissions'
-if (process.env.HEROKU) {
-    uri = 'http://oobleck-api.herokuapp.com/submissions'
-}
+var getAccessToken = require('./config/get-access-token')
 
-// Homepage GET
-router.get('/', (request, response) => {
+router.get('/', getAccessToken, function(request, response) {
     superagent
-        .get(uri)
+        .get('oobleck-api.herokuapp.com/submissions')
+        .set('Authorization', 'Bearer ' + request.access_token)
         .end(function(error, data) {
-            if (error) {
-                response.render('error', parseError(error))
-            }
+            if(data.status == 403){
+                response.status(403).send('403 Forbidden') } 
             else {
-                let submissions = data.body
-                response.render('index', { submissions: submissions })            
+                response.render('index', { submissions: data.body })
             }
         })
 })
-
-let parseError = function(error) {
-    return {
-        status: error.status,
-        message: error.response.text
-    }
-}
 
 module.exports = router
