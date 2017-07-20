@@ -1,0 +1,7 @@
+extends _layout
+
+block content
+    p Here's every act in the database: 
+    ul
+        each submission in submissions
+            li= submission.name
