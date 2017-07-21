@@ -10,6 +10,12 @@ app.use(bodyParser.urlencoded({extended: true}))    // For... parsing?
 app.use(bodyParser.json())                          // & JSON!
 app.use(express.static('public'))                   // Static file location
 
+// Passportin'
+const passport = require('passport')
+app.use(passport.initialize())
+app.use(passport.session())
+require('./config/passport')(passport)
+
 // Add Routes
 let routes = require('./routes')
 app.use('/', routes)
@@ -18,15 +24,3 @@ app.use('/', routes)
 let port = process.env.PORT || 8000;
 app.listen(port, ()=> { console.log("Server ready! Listening on port " + port) })
 
-/*
-const passport = require('passport')
-const flash = require('connect-flash')
-const cookieParser = require('cookie-parser')
-const session = require('express-session')
-app.use(cookieParser())
-app.use(session({secret: "ilovecakes"}))
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(flash())
-require('./protected-routes')(app, passport)
-*/
