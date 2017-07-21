@@ -7,6 +7,7 @@ const superagent = require('superagent')
 app.set('views', './public')                        // Find the views in the 'public' folder!
 app.set('view engine', 'pug')                       // Use PUG as our view engine
 app.use(bodyParser.urlencoded({extended: true}))    // For... parsing?
+app.use(bodyParser.json())                          // & JSON!
 app.use(express.static('public'))                   // Static file location
 
 // Add Routes

@@ -2,18 +2,27 @@ const express = require('express')
 const router = express.Router()
 const superagent = require('superagent')
 const getApiAccessToken = require('./config/get-api-access-token')
+const uri = require('./config/get-uri')
 
-var uri
-if(process.env.HEROKU) {
-    uri = 'oobleck-api.herokuapp.com'
-}
-else {
-    uri = 'localhost:3000'
-}
+const signup = require('./routes/signup')
+const login = require('./routes/login')
+router.use(signup)
+router.use(login)
 
 router.get('/', function(request, response) {
     response.render('index')
 })
+
+/*
+router.get('/user/:id', function(request, response) {
+    const id = request.params.id
+    superagent
+        .get(uri + '/users/' + id)
+        .end(function(error, data) {
+            response.send(data.body)
+        })
+})
+*/
 
 router.get('/submissions', getApiAccessToken, function(request, response) {
     superagent
@@ -25,21 +34,6 @@ router.get('/submissions', getApiAccessToken, function(request, response) {
             else {
                 response.render('submissions', { submissions: data.body })
             }
-        })
-})
-
-router.get('/signup', function(request, response) {
-    response.render('signup')
-})
-
-router.post('/signup', /*getApiAccessToken,*/ function(request, response) {
-    console.log(request.body)
-    superagent
-        .post(uri + '/users')
-        .send({ username: request.body.username, password: request.body.password }) // sends a JSON post body
-        //.set('Authorization', 'Bearer ' + request.access_token)
-        .end(function(error, data) {
-            response.send("YOU DID IT!")
         })
 })
 

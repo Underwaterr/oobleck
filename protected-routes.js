@@ -3,8 +3,6 @@ module.exports = function(app, passport) {
         response.send("Yahoo!")
     })
 
-
-
     app.get('/login', function(request, response) {
         response.render('login')
     })
