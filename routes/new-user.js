@@ -18,7 +18,7 @@ router.post('/new-user', getApiAccessToken, function(request, response) {
         .set('Authorization', 'Bearer ' + request.access_token)
         .end(function(error, data) {
             if(data.status == 403) response.render('error', data)
-            response.redirect(/users)
+            response.redirect('/users')
         })
 })
 
