@@ -8,7 +8,7 @@ router.get('/new-user', function(request, response) {
     response.render('new-user')
 })
 
-router.post('/signup', getApiAccessToken, function(request, response) {
+router.post('/new-user', getApiAccessToken, function(request, response) {
     let username = request.body.username
     let password = request.body.password
     superagent
@@ -18,7 +18,7 @@ router.post('/signup', getApiAccessToken, function(request, response) {
         .set('Authorization', 'Bearer ' + request.access_token)
         .end(function(error, data) {
             if(data.status == 403) response.render('error', data)
-            response.json(data.body)
+            response.redirect(/users)
         })
 })
 
