@@ -10,18 +10,20 @@ router.get('/login', function(request, response) {
 })
 
 router.post('/login', function(request, response, next) {
-    let username = request.body.username
-    let password = request.body.password
+    //let username = request.body.username // Are these necessary?
+    //let password = request.body.password // Huhh???
     passport.authenticate('local', {
-        successRedirect: '/yay',
-        failureRedirect: '/boo',
-        failureFlash: true
+        successRedirect: '/user',
+        failureRedirect: '/login',
+        failureFlash: false
     })(request, response, next)
 })
 
-router.get('/yay', function(request, response) {
-    response.send("YAY!")
+router.get('/user', function(request, response) {
+    console.log("GET USER", response.body)
+    response.render('user', {username: 'fake', password: 'fake'})
 })
+
 router.get('/boo', function(request, response) {
     response.send("BOO!")
 })

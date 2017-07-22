@@ -1,0 +1,13 @@
+extends _layout
+
+block content
+    .row
+        .col-sm-6.col-sm-offset-3
+            table.table.table-striped
+                tr
+                    th Username
+                    th Password
+                each user in users
+                    tr
+                        td #{user.username}
+                        td #{user.password}

@@ -6,23 +6,14 @@ const uri = require('./config/get-uri')
 
 const signup = require('./routes/signup')
 const login = require('./routes/login')
+const users = require('./routes/users')
 router.use(signup)
 router.use(login)
+router.use(users)
 
 router.get('/', function(request, response) {
     response.render('index')
 })
-
-/*
-router.get('/user/:id', function(request, response) {
-    const id = request.params.id
-    superagent
-        .get(uri + '/users/' + id)
-        .end(function(error, data) {
-            response.send(data.body)
-        })
-})
-*/
 
 router.get('/submissions', getApiAccessToken, function(request, response) {
     superagent

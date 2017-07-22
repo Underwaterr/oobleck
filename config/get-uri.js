@@ -1,3 +1,3 @@
 module.exports = process.env.HEROKU 
-    ? 'oobleck-api.herokuapp.com'
-    : 'localhost:3000'
+    ? 'http://oobleck-api.herokuapp.com'
+    : 'http://localhost:3000'
