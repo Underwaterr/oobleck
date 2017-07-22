@@ -1,4 +1,4 @@
-var superagent = require('superagent')
+const superagent = require('superagent')
 
 // Super secret
 if (process.env.HEROKU) {
@@ -9,14 +9,14 @@ else {
     try {
         let secret = require('../secret')
         var NON_INTERACTIVE_CLIENT_ID = secret.NON_INTERACTIVE_CLIENT_ID
-        var NON_INTERACTIVE_CLIENT_SECRET = secret.NON_INTERACTIVE_CLIENT_SECRET
+        var NON_INTERACTIVE_CLIENT_SECRET = '' //secret.NON_INTERACTIVE_CLIENT_SECRET
     }
     catch(e) {
         throw 'No auth keys found'
     }
 }
 
-var authData = {
+const authData = {
     client_id: NON_INTERACTIVE_CLIENT_ID,
     client_secret: NON_INTERACTIVE_CLIENT_SECRET,
     audience: 'http://oobleck-api.herokuapp.com/',
@@ -33,7 +33,7 @@ module.exports = function getApiAccessToken(request, response, next) {
                 next()
             }
             else {
-                response.status(401).send('Unauthorized')
+                return response.status(401).render('error', {text: 'API authentication failed'})
             }
         })
 }

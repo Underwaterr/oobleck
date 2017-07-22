@@ -4,6 +4,7 @@ const superagent = require('superagent')
 const getApiAccessToken = require('../config/get-api-access-token')
 const uri = require('../config/get-uri')
 const passport = require('passport')
+const mustBeLoggedIn = require('../utilities/must-be-logged-in')
 
 router.get('/login', function(request, response) {
     response.render('login')
@@ -17,13 +18,13 @@ router.post('/login', getApiAccessToken, function(request, response, next) {
     })(request, response, next)
 })
 
-router.get('/user', function(request, response) {
-    // Request & Response are empty?
+router.get('/user', mustBeLoggedIn, function(request, response) {
     response.render('user')
 })
 
-router.get('/boo', function(request, response) {
-    response.send("BOO!")
+router.get('/logout', function(request, response){
+    request.logout()
+    response.redirect('/')
 })
 
 

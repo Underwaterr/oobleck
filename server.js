@@ -11,7 +11,9 @@ app.use(bodyParser.json())                          // & JSON!
 app.use(express.static('public'))                   // Static file location
 
 // Passportin'
+const session = require('express-session');
 const passport = require('passport')
+app.use(session({secret: "I think Donnie Darko is overrated"}));
 app.use(passport.initialize())
 app.use(passport.session())
 require('./config/passport')(passport)

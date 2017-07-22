@@ -16,7 +16,7 @@ router.use(submissionsRoutes)
 // Error handler
 router.use(function(error, request, response, next) {
     console.log("Error Found", error)
-    response.status(error.statusCode || 500).json(error);
+    next()//response.status(error.statusCode || 500).json(error);
 })
 
 // Home page
