@@ -11,6 +11,12 @@ router.use(signup)
 router.use(login)
 router.use(users)
 
+// Error handler
+router.use(function(error, request, response, next) {
+    console.log("Error Found", error)
+    response.status(error.statusCode || 500).json(error);
+})
+
 router.get('/', function(request, response) {
     response.render('index')
 })
@@ -20,11 +26,8 @@ router.get('/submissions', getApiAccessToken, function(request, response) {
         .get(uri + '/submissions')
         .set('Authorization', 'Bearer ' + request.access_token)
         .end(function(error, data) {
-            if(data.status == 403){
-                response.status(403).send('403 Forbidden') } 
-            else {
-                response.render('submissions', { submissions: data.body })
-            }
+            if(data.status == 403) response.render('error', data)
+            response.render('submissions', { submissions: data.body })
         })
 })
 

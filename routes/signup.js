@@ -8,17 +8,16 @@ router.get('/signup', function(request, response) {
     response.render('signup')
 })
 
-router.post('/signup', /*getApiAccessToken,*/ function(request, response) {
+router.post('/signup', getApiAccessToken, function(request, response) {
     let username = request.body.username
     let password = request.body.password
-
     superagent
         .post(uri + '/users')
-        .send({ username: username, password: password }) // sends a JSON post body
         .type('form')
-        //.set('Authorization', 'Bearer ' + request.access_token)
+        .send({ username: username, password: password })
+        .set('Authorization', 'Bearer ' + request.access_token)
         .end(function(error, data) {
-            if(error) response.send(error)
+            if(data.status == 403) response.render('error', data)
             response.json(data.body)
         })
 })

@@ -9,9 +9,7 @@ router.get('/login', function(request, response) {
     response.render('login')
 })
 
-router.post('/login', function(request, response, next) {
-    //let username = request.body.username // Are these necessary?
-    //let password = request.body.password // Huhh???
+router.post('/login', getApiAccessToken, function(request, response, next) {
     passport.authenticate('local', {
         successRedirect: '/user',
         failureRedirect: '/login',
@@ -20,8 +18,8 @@ router.post('/login', function(request, response, next) {
 })
 
 router.get('/user', function(request, response) {
-    console.log("GET USER", response.body)
-    response.render('user', {username: 'fake', password: 'fake'})
+    // Request & Response are empty?
+    response.render('user')
 })
 
 router.get('/boo', function(request, response) {
