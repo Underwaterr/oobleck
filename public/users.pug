@@ -1,11 +1,16 @@
 extends _layout
 
 block content
+    h1 Users
     table.table.table-striped
         tr
             th Username
             th Password
+            th ID
         each user in users
             tr
                 td #{user.username}
                 td #{user.password}
+                td #{user._id}
+
+    a.btn.btn-primary(href="/new-user") New User

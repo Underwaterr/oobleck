@@ -1,7 +1,14 @@
 extends _layout
 
 block content
-    p Here's every act in the database: 
-    ul
+    h1 Submissions
+    table.table.table-striped
+        tr
+            th Name
+            th ID
         each submission in submissions
-            li= submission.name
+            tr
+                td #{submission.name}
+                td #{submission._id}
+
+    a.btn.btn-primary(href="/new-submission") New Submission

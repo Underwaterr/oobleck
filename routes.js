@@ -7,9 +7,11 @@ const uri = require('./config/get-uri')
 const signup = require('./routes/signup')
 const login = require('./routes/login')
 const users = require('./routes/users')
+const submissions = require('./routes/submissions')
 router.use(signup)
 router.use(login)
 router.use(users)
+router.use(submissions)
 
 // Error handler
 router.use(function(error, request, response, next) {
@@ -17,18 +19,9 @@ router.use(function(error, request, response, next) {
     response.status(error.statusCode || 500).json(error);
 })
 
+// Home page
 router.get('/', function(request, response) {
     response.render('index')
-})
-
-router.get('/submissions', getApiAccessToken, function(request, response) {
-    superagent
-        .get(uri + '/submissions')
-        .set('Authorization', 'Bearer ' + request.access_token)
-        .end(function(error, data) {
-            if(data.status == 403) response.render('error', data)
-            response.render('submissions', { submissions: data.body })
-        })
 })
 
 module.exports = router
