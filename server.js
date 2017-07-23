@@ -4,11 +4,11 @@ const app = express()
 const superagent = require('superagent')
 
 // Setup how to render pages
-app.set('views', './public')                        // Find the views in the 'public' folder!
+app.set('views', './public/views')                  // Find the views in the 'public' folder!
 app.set('view engine', 'pug')                       // Use PUG as our view engine
 app.use(bodyParser.urlencoded({extended: true}))    // For... parsing?
 app.use(bodyParser.json())                          // & JSON!
-app.use(express.static('public'))                   // Static file location
+app.use(express.static('public/static'))            // Static file location
 
 // Passportin'
 const session = require('express-session');
@@ -17,6 +17,10 @@ app.use(session({secret: "I think Donnie Darko is overrated"}));
 app.use(passport.initialize())
 app.use(passport.session())
 require('./config/passport')(passport)
+
+// Check user ever tim
+const setLoginStatus = require('./utilities/set-login-status')
+app.use(setLoginStatus)
 
 // Add Routes
 let routes = require('./routes')

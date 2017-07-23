@@ -1,16 +1,20 @@
-extends _layout
-
+extends _layout-with-navigation
 block content
     .row
         .col-sm-6.col-sm-offset-3
             .panel.panel-default
                 .panel-body
                     h1 New User
-                    form(action="/signup" method="POST")
+                    form(action="/new-user" method="POST")
                         .form-group
                             label Username
                             input.form-control(type="text" name="username")
                         .form-group
                             label Password
                             input.form-control(type="password" name="password")
+                        .form-group
+                            label Role
+                            select.form-control(name="role")
+                                option(value="admin") Admin
+                                option(value="reviewer") Reviewer
                         button.btn.btn-primary(type="submit") Sign Up!

@@ -4,14 +4,11 @@ const superagent = require('superagent')
 const getApiAccessToken = require('./config/get-api-access-token')
 const uri = require('./config/get-uri')
 
-const newUserRoutes = require('./routes/new-user')
-const loginRoutes = require('./routes/login')
-const usersRoutes = require('./routes/users')
-const submissionsRoutes = require('./routes/submissions')
-router.use(newUserRoutes)
-router.use(loginRoutes)
-router.use(usersRoutes)
-router.use(submissionsRoutes)
+router.use(require('./routes/new-user'))
+router.use(require('./routes/login'))
+router.use(require('./routes/users'))
+router.use(require('./submissions/routes'))
+router.use(require('./public-submission-form/routes'))
 
 // Error handler
 router.use(function(error, request, response, next) {

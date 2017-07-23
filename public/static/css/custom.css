@@ -1,0 +1,12 @@
+/* Push body down underneath navbar */
+body { padding-top: 70px; }
+
+.navbar-collapse hr { 
+    margin: 0; 
+    border-top:     1px solid #149C82;
+    border-bottom:  1px solid #30C3A6;
+}
+.user-info { font-style: italic; padding-left: 15px; }
+.username { font-weight: bold; }
+.role:before { content: '(' ); }
+.role:after  { content: ')' ); }

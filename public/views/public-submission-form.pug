@@ -1,0 +1,12 @@
+extends _layout-without-navigation
+block content
+    .row
+        .col-sm-6.col-sm-offset-3
+            .panel.panel-default
+                .panel-body
+                    h1 Submit Act for Out of Bounds
+                    form(action="/public-submission-form" method="POST")
+                        .form-group
+                            label Name
+                            input.form-control(type="text" name="name")
+                        button.btn.btn-primary(type="submit") Submit Act

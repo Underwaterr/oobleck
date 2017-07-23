@@ -1,16 +1,20 @@
-extends _layout
-
+extends _layout-with-navigation
 block content
     h1 Users
     table.table.table-striped
         tr
             th Username
             th Password
+            th Role
             th ID
+            th &nbsp;
         each user in users
             tr
                 td #{user.username}
                 td #{user.password}
+                td #{user.role}
                 td #{user._id}
+                td
+                    a(href="/user/delete/" + user._id) Delete
 
     a.btn.btn-primary(href="/new-user") New User

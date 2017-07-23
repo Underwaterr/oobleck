@@ -1,14 +1,14 @@
-extends _layout
-
+extends _layout-with-navigation
 block content
     h1 Submissions
     table.table.table-striped
         tr
             th Name
             th ID
+            th &nbsp;
         each submission in submissions
             tr
                 td #{submission.name}
                 td #{submission._id}
-
-    a.btn.btn-primary(href="/new-submission") New Submission
+                td
+                    a(href="/submission/delete/" + submission._id) Delete

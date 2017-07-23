@@ -12,10 +12,11 @@ router.get('/new-user', mustBeLoggedIn, function(request, response) {
 router.post('/new-user', getApiAccessToken, function(request, response) {
     let username = request.body.username
     let password = request.body.password
+    let role     = request.body.role
     superagent
         .post(uri + '/users')
         .type('form')
-        .send({ username: username, password: password })
+        .send({ username: username, password: password, role: role })
         .set('Authorization', 'Bearer ' + request.access_token)
         .end(function(error, data) {
             response.redirect('/users')

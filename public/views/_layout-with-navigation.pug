@@ -4,9 +4,10 @@ html
         meta(charset="utf-8")
         meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
         meta(http-equiv="x-ua-compatible" content="ie=edge")
-        link(rel="stylesheet" href="/bootstrap.min.css")
-        style(type="text/css").
-            body { padding-top: 70px; }
+        link(rel="stylesheet" href="/css/bootstrap.min.css")
+        link(rel="stylesheet" href="/css/custom.css")
+        script(type="text/javascript" src="/js/jquery.min.js")
+        script(type="text/javascript" src="/js/bootstrap.min.js")            
     body
         nav.navbar.navbar-inverse.navbar-fixed-top
             .container
@@ -23,11 +24,19 @@ html
                             a(href="/users") Users
                         li
                             a(href="/submissions") Submissions
+                    hr
                     ul.nav.navbar-nav.navbar-right
-                        li
-                            a(href="/login") Log In
-                        li
-                            a(href="/logout") Log Out
+                        if isLoggedIn
+                            li.user-info
+                                p.navbar-text Signed in as 
+                                    span.username #{user.username} 
+                                    span.role (#{user.role})
+                            li
+                                a(href="/logout") Log Out
+                        else
+                            li
+                                a(href="/login") Log In
+
 
         .container
             block content
