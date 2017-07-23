@@ -9,7 +9,7 @@ else {
     try {
         let secret = require('../secret')
         var NON_INTERACTIVE_CLIENT_ID = secret.NON_INTERACTIVE_CLIENT_ID
-        var NON_INTERACTIVE_CLIENT_SECRET = '' //secret.NON_INTERACTIVE_CLIENT_SECRET
+        var NON_INTERACTIVE_CLIENT_SECRET = secret.NON_INTERACTIVE_CLIENT_SECRET
     }
     catch(e) {
         throw 'No auth keys found'

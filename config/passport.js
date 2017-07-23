@@ -12,6 +12,7 @@ module.exports = function(passport) {
             .send({ username: username, password: password })
             .set('Authorization', 'Bearer ' + request.access_token)
             .end(function(error, response) {
+                if(!response) return done(null, false)  // Will re-direct back to login page
                 return done(null, response.body.result)
             })
     }))
