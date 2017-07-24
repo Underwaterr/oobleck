@@ -38,4 +38,21 @@ router.get('/submission/delete/:id', mustBeLoggedIn, mustBeRole(['admin']), must
         })
 })
 
+router.post('/review/:submissionId', mustBeLoggedIn, mustBeRole('reviewer'), mustHaveToken, function(request, response) {
+    const submissionId = request.params.submissionId
+    const review = { 
+        userId: request.user._id,
+        score: request.body.score, 
+        notes: request.body.notes 
+    }
+    superagent
+        .post(uri + '/review/' + submissionId)
+        .type('form')
+        .send(review)
+        .set('Authorization', 'Bearer ' + request.access_token)
+        .end(function(error, data) {
+            response.redirect('/submissions')
+        })
+})
+
 module.exports = router

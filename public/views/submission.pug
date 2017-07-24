@@ -4,6 +4,11 @@ block content
         if userHasRole('admin')
             span.small.code &nbsp;[#{_id}]
 
+    h2 Description
+    if description
+        p=description
+    else
+        p.text-danger (No description provided)
 
     h2 Submission Videos
     if(videoNotes)
@@ -14,3 +19,32 @@ block content
         each videoUrl in videoUrls
             p
                 a(href="" + videoUrl target="_blank")=videoUrl
+
+    if userHasRole('reviewer')
+        h2 Your Score
+        form(action="/review/" + _id method="POST")
+            .radio
+                label
+                    input(type="radio" name="score" value="4" required) 
+                    | Exceptionally Good
+            .radio
+                label
+                    input(type="radio" name="score" value="3") 
+                    | Yes
+            .radio
+                label
+                    input(type="radio" name="score" value="2") 
+                    | Unsure
+            .radio
+                label
+                    input(type="radio" name="score" value="1") 
+                    | No
+            .radio
+                label
+                    input(type="radio" name="score" value="0") 
+                    | Exceptionally Bad
+            .form-group
+                label Notes
+                textarea(name="notes").form-control
+
+            button.btn.btn-primary(type="submit") Save Review

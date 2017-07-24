@@ -1,6 +1,8 @@
 /* Push body down underneath navbar */
 body { padding-top: 70px; }
 
+textarea { resize: vertical; }
+
 .code { font-family: monospace; }
 
 .navbar-collapse hr { 
@@ -8,6 +10,7 @@ body { padding-top: 70px; }
     border-top:     1px solid #149C82;
     border-bottom:  1px solid #30C3A6;
 }
+
 .user-info { font-style: italic; padding-left: 15px; }
 .username { font-weight: bold; }
 .role:before { content: '(' ); }
