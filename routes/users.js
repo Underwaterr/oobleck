@@ -1,13 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const superagent = require('superagent')
+const uri = require('../config/get-uri')
 const mustBeLoggedIn = require('../utilities/must-be-logged-in')
 const mustBeRole = require('../utilities/must-be-role')
-const getApiAccessToken = require('../config/get-api-access-token')
+const mustHaveToken = require('../utilities/must-have-token')
 
-const uri = require('../config/get-uri')
-
-router.get('/users', mustBeLoggedIn, mustBeRole(['admin']), getApiAccessToken, function(request, response) {
+router.get('/users', mustBeLoggedIn, mustBeRole(['admin']), mustHaveToken, function(request, response) {
     superagent
         .get(uri + '/users')
         .type('form')
@@ -17,7 +16,18 @@ router.get('/users', mustBeLoggedIn, mustBeRole(['admin']), getApiAccessToken, f
         })
 })
 
-router.get('/user/delete/:id', mustBeLoggedIn, getApiAccessToken, function(request, response) {
+router.get('/user/:id', mustBeLoggedIn, mustBeRole(['admin']), mustHaveToken, function(request, response) {
+    const id = request.params.id
+    superagent
+        .get(uri + '/user/id/' + id)
+        .type('form')
+        .set('Authorization', 'Bearer ' + request.access_token)
+        .end(function(error, data) {
+            response.render('user', data.body)
+        })
+})
+
+router.get('/user/delete/:id', mustBeLoggedIn, mustHaveToken, function(request, response) {
     const id = request.params.id
     superagent
         .delete(uri + '/users/' + id)

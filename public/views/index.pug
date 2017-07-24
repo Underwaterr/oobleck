@@ -1,4 +1,7 @@
 extends _layout-with-navigation
 block content
     h1 OoBleck
-    p Nothing to see here.
+    p Nothing to see here. 
+        unless isLoggedIn
+            a(href="/login") Log in
+            | .

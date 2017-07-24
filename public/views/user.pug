@@ -1,3 +1,7 @@
 extends _layout-with-navigation
 block content
-    p You're logged in!
+    h1=username
+        if userHasRole('admin')
+            span.small.code &nbsp;[#{_id}]
+    h2 Role
+    p=role

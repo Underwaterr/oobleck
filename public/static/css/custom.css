@@ -1,6 +1,8 @@
 /* Push body down underneath navbar */
 body { padding-top: 70px; }
 
+.code { font-family: monospace; }
+
 .navbar-collapse hr { 
     margin: 0; 
     border-top:     1px solid #149C82;

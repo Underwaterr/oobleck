@@ -1,0 +1,16 @@
+extends _layout-with-navigation
+block content
+    h1=name 
+        if userHasRole('admin')
+            span.small.code &nbsp;[#{_id}]
+
+
+    h2 Submission Videos
+    if(videoNotes)
+        p
+            strong Note: 
+            | #{videoNotes}
+    .list-group
+        each videoUrl in videoUrls
+            p
+                a(href="" + videoUrl target="_blank")=videoUrl

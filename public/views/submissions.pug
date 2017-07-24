@@ -5,10 +5,14 @@ block content
         tr
             th Name
             th ID
-            th &nbsp;
+            if userHasRole('admin')
+                th &nbsp;
         each submission in submissions
             tr
-                td #{submission.name}
-                td #{submission._id}
-                td
-                    a(href="/submission/delete/" + submission._id) Delete
+                td 
+                    a(href="/submission/" + submission._id) #{submission.name}
+                td 
+                    | #{submission._id}
+                if userHasRole('admin')
+                    td
+                        a(href="/submission/delete/" + submission._id) Delete

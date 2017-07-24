@@ -1,12 +1,37 @@
 extends _layout-without-navigation
 block content
+    style(type="text/css").
+        body { background-color: #2c3e50; }
     .row
         .col-sm-6.col-sm-offset-3
             .panel.panel-default
                 .panel-body
-                    h1 Submit Act for Out of Bounds
+                    h2 Submission Form
                     form(action="/public-submission-form" method="POST")
                         .form-group
-                            label Name
+                            h3
+                                label Act Name
                             input.form-control(type="text" name="name")
+                        .form-group
+                            h3
+                                label URLs to Videos
+                            p.help-block Only one video is required.
+                            p.help-block The video should be less than one year old.
+                            .form-group
+                                .input-group
+                                    input.form-control.code(type="text" name="videoUrls[]")
+                                    span.input-group-btn
+                                        button.btn.btn-default(type="button") remove
+                            .form-group
+                                .input-group
+                                    input.form-control.code(type="text" name="videoUrls[]")
+                                    span.input-group-btn
+                                        button.btn.btn-default(type="button") remove
+                            .form-group
+                                button#clicky.btn.btn-default(type="button") Add Additional Video Link
+                        .form-group
+                            h3
+                                label Special Considerations for Videos
+                            p.help-block Any passwords? Skip ahead by 30 minutes?
+                            input.form-control(type="text" name="video")
                         button.btn.btn-primary(type="submit") Submit Act

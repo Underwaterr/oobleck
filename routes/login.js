@@ -1,25 +1,25 @@
 const express = require('express')
 const router = express.Router()
 const superagent = require('superagent')
-const getApiAccessToken = require('../config/get-api-access-token')
 const uri = require('../config/get-uri')
-const passport = require('passport')
 const mustBeLoggedIn = require('../utilities/must-be-logged-in')
+const mustHaveToken = require('../utilities/must-have-token')
+const passport = require('passport')
 
 router.get('/login', function(request, response) {
     response.render('login')
 })
 
-router.post('/login', getApiAccessToken, function(request, response, next) {
+router.post('/login', mustHaveToken, function(request, response, next) {
     passport.authenticate('local', {
-        successRedirect: '/user',
+        successRedirect: '/login-successful',
         failureRedirect: '/login',
         failureFlash: false
     })(request, response, next)
 })
 
-router.get('/user', mustBeLoggedIn, function(request, response) {
-    response.render('user')
+router.get('/login-successful', mustBeLoggedIn, function(request, response) {
+    response.render('login-successful')
 })
 
 router.get('/logout', function(request, response){

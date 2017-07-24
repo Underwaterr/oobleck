@@ -10,7 +10,8 @@ block content
             th &nbsp;
         each user in users
             tr
-                td #{user.username}
+                td 
+                    a(href="/user/" + user._id) #{user.username}
                 td #{user.password}
                 td #{user.role}
                 td #{user._id}

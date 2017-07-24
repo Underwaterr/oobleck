@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const superagent = require('superagent')
-const getApiAccessToken = require('./config/get-api-access-token')
-const uri = require('./config/get-uri')
 
 router.use(require('./routes/new-user'))
 router.use(require('./routes/login'))
