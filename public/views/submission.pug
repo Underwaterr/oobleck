@@ -21,30 +21,31 @@ block content
                 a(href="" + videoUrl target="_blank")=videoUrl
 
     if userHasRole('reviewer')
+        -var review = reviews.find(x=> x.userId == user.id)
         h2 Your Score
         form(action="/review/" + _id method="POST")
             .radio
                 label
-                    input(type="radio" name="score" value="4" required) 
+                    input(type="radio" name="score" value="4" checked=review?review.score==4:false required) 
                     | Exceptionally Good
             .radio
                 label
-                    input(type="radio" name="score" value="3") 
+                    input(type="radio" name="score" value="3" checked=review?review.score==3:false) 
                     | Yes
             .radio
                 label
-                    input(type="radio" name="score" value="2") 
+                    input(type="radio" name="score" value="2" checked=review?review.score==2:false) 
                     | Unsure
             .radio
                 label
-                    input(type="radio" name="score" value="1") 
+                    input(type="radio" name="score" value="1" checked=review?review.score==1:false) 
                     | No
             .radio
                 label
-                    input(type="radio" name="score" value="0") 
+                    input(type="radio" name="score" value="0" checked=review?review.score==0:false) 
                     | Exceptionally Bad
             .form-group
                 label Notes
-                textarea(name="notes").form-control
+                textarea(name="notes").form-control #{review?review.notes:''}
 
             button.btn.btn-primary(type="submit") Save Review

@@ -5,9 +5,11 @@ module.exports = function(request, response, next) {
         let isLoggedIn = request.isAuthenticated()
         response.locals.isLoggedIn = isLoggedIn
         if (isLoggedIn) {
+            let id = request.user._id
             let username = request.user.username 
             let role = request.user.role
             response.locals.user = {
+                id: id,
                 username: username,
                 role: role
             }
