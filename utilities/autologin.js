@@ -7,7 +7,7 @@ module.exports = function () {
         superagent
             .post(uri + '/login')
             .type('form')
-            .send({ username: 'yay', password: 'password' })
+            .send({ username: 'fun', password: 'fun' })
             .set('Authorization', 'Bearer ' + token)
             .end(function(error, data) {
                 console.log("Nothing matters.")
