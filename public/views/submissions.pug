@@ -1,6 +1,9 @@
 extends _layout-with-navigation
 block content
     h1 Submissions
+    if userHasRole('reviewer')
+        .progress
+            .progress-bar(style="width: " + percentProgress + "%")
     table.table.table-striped
         tr
             th Name
@@ -29,6 +32,33 @@ block content
                         | #{submission._id}
                     td
                         a(href="/submission/delete/" + submission._id) Delete
+    if userHasRole('reviewer')
+        h2 Graphs
+        p Graphs are fun!
+
+        p Aim for an even distribution of ratings and no 🌚
+        script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js")
+        script(type="text/javascript").
+            google.charts.load('current', {'packages':['corechart']})
+            google.charts.setOnLoadCallback(drawChart)
+            let scoreDistribution = [#{scoreDistribution}]
+            console.log(scoreDistribution)
+            function drawChart() {
+                let data = google.visualization.arrayToDataTable([
+                    ['Score', 'Number of Scores'],
+                    ['⭐️⭐️⭐️⭐️', scoreDistribution[4]],
+                    ['⭐️⭐️⭐️🔸', scoreDistribution[3]],
+                    ['⭐️⭐️🔸🔸', scoreDistribution[2]],
+                    ['⭐️🔸🔸🔸', scoreDistribution[1]],
+                    ['🔸🔸🔸🔸', scoreDistribution[0]],
+                    ['🌚',        scoreDistribution[5]]
+                ])
+                let username = '#{user.username}'
+                let options = { title: username + ' Score Distribution' }
+                let chart = new google.visualization.PieChart(document.getElementById('piechart'))
+                chart.draw(data, options)
+            }
+        #piechart(style="width: 900px; height: 500px;")
 
 mixin showStars(numberOfStars)
     -var counter = 0
