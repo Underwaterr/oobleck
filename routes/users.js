@@ -30,7 +30,7 @@ router.get('/user/:id', mustBeLoggedIn, mustBeRole(['admin']), mustHaveToken, fu
 router.get('/user/delete/:id', mustBeLoggedIn, mustHaveToken, function(request, response) {
     const id = request.params.id
     superagent
-        .delete(uri + '/users/' + id)
+        .delete(uri + '/user/' + id)
         .type('form')
         .set('Authorization', 'Bearer ' + request.access_token)
         .end(function(error, data) {

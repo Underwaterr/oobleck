@@ -1,5 +1,7 @@
 extends _layout-with-navigation
 block content
+    p
+        a(href="/submissions") ← Submissions
     h1=name 
         if userHasRole('admin')
             span.small.code &nbsp;[#{_id}]
@@ -21,7 +23,6 @@ block content
                 a(href="" + videoUrl target="_blank")=videoUrl
 
     if userHasRole('reviewer')
-        -var review = reviews.find(x=> x.userId == user.id)
         h2 Your Score
         form(action="/review/" + _id method="POST")
             .radio

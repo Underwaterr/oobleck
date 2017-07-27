@@ -11,7 +11,8 @@ router.get('/submissions', mustBeLoggedIn, mustBeRole(['admin', 'reviewer']), mu
         .get(uri + '/submissions')
         .set('Authorization', 'Bearer ' + request.access_token)
         .end(function(error, data) {
-            response.render('submissions', { submissions: data.body })
+            let sortedSubmissions = data.body.sort((a, b)=> {return a.name.localeCompare(b.name)})
+            response.render('submissions', { submissions: sortedSubmissions})
         })
 })
 
@@ -22,7 +23,12 @@ router.get('/submission/:id', mustBeLoggedIn, mustBeRole(['admin', 'reviewer']),
         .type('form')
         .set('Authorization', 'Bearer ' + request.access_token)
         .end(function(error, data) {
-            response.render('submission', data.body)
+            let submission = data.body
+            let userId = response.locals.user.id
+            submission.review = submission.reviews[userId] == undefined 
+                ? {score: null, notes: ''}
+                : submission.reviews[userId]
+            response.render('submission', submission)
         })
 
 })
@@ -42,8 +48,8 @@ router.post('/review/:submissionId', mustBeLoggedIn, mustBeRole('reviewer'), mus
     const submissionId = request.params.submissionId
     const review = { 
         userId: request.user._id,
-        score: request.body.score, 
-        notes: request.body.notes 
+        score:  request.body.score, 
+        notes:  request.body.notes 
     }
     superagent
         .post(uri + '/review/' + submissionId)

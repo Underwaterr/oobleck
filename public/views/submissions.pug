@@ -4,15 +4,37 @@ block content
     table.table.table-striped
         tr
             th Name
-            th ID
+            if userHasRole('reviewer')
+                th Your Score
+                th Notes
             if userHasRole('admin')
+                th ID
                 th &nbsp;
         each submission in submissions
             tr
                 td 
                     a(href="/submission/" + submission._id) #{submission.name}
-                td 
-                    | #{submission._id}
+                if userHasRole('reviewer')
+                    if (submission.reviews[user.id] !== undefined)
+                        td
+                            +showStars(submission.reviews[user.id].score)
+                        td
+                            | #{submission.reviews[user.id].notes}
+                    else
+                        td 🌚
+                        td &nbsp;
+
                 if userHasRole('admin')
+                    td 
+                        | #{submission._id}
                     td
                         a(href="/submission/delete/" + submission._id) Delete
+
+mixin showStars(numberOfStars)
+    -var counter = 0
+    while counter < numberOfStars
+        | ⭐️
+        -counter++
+    while counter < 4
+        | 🔸
+        -counter++

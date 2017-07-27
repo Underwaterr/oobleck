@@ -15,7 +15,7 @@ router.post('/new-user', mustHaveToken, function(request, response) {
     let password = request.body.password
     let role     = request.body.role
     superagent
-        .post(uri + '/users')
+        .post(uri + '/user')
         .type('form')
         .send({ username: username, password: password, role: role })
         .set('Authorization', 'Bearer ' + request.access_token)

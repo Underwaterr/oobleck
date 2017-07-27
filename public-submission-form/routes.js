@@ -13,10 +13,14 @@ router.get('/public-submission-form-thank-you', function(request, response) {
 })
 
 router.post('/public-submission-form', mustHaveToken, function(request, response) {
+    console.log("YEAH:", request.body)
     let submission = {
         name: request.body.name,
-        videoLinks: request.body.videoLinks
+        description: request.body.description,
+        videoUrls: request.body.videoUrls,
+        videoNotes: request.body.videoNotes
     }
+    console.log("NEW:", submission)
    superagent
         .post(uri + '/submission')
         .type('form')
