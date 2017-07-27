@@ -13,19 +13,29 @@ router.get('/submissions', mustBeLoggedIn, mustBeRole(['admin', 'reviewer']), mu
         .end(function(error, data) {
             let sortedSubmissions = data.body.sort((a, b)=> {return a.name.localeCompare(b.name)})
 
-            let userId = response.locals.user.id
-            let scoreDistribution = [0, 0, 0, 0, 0, 0]
-            let numberOfSubmissionsUserReviewed = 0
-            sortedSubmissions.forEach(function(submission) {
-                if (submission.reviews[userId] !== undefined) {
-                    scoreDistribution[submission.reviews[userId].score]++
-                    numberOfSubmissionsUserReviewed++
-                }
-                else
-                    scoreDistribution[5]++
-            })
-            let totalNumberOfSubmissions = sortedSubmissions.length
-            let percentProgress = (numberOfSubmissionsUserReviewed / totalNumberOfSubmissions) * 100
+            let userRole = response.locals.user.role
+
+            if (userRole == 'reviewer') {
+                var userId = response.locals.user.id
+                var scoreDistribution = [0, 0, 0, 0, 0, 0]
+                var numberOfSubmissionsUserReviewed = 0
+                sortedSubmissions.forEach(function(submission) {
+                    if (submission.reviews[userId] !== undefined) {
+                        scoreDistribution[submission.reviews[userId].score]++
+                        numberOfSubmissionsUserReviewed++
+                    }
+                    else
+                        scoreDistribution[5]++
+                })
+                var totalNumberOfSubmissions = sortedSubmissions.length
+                var percentProgress = (numberOfSubmissionsUserReviewed / totalNumberOfSubmissions) * 100                
+            }
+            else if (userRole == 'admin') {
+                var scoreDistribution = null
+                var totalNumberOfSubmissions = sortedSubmissions.length
+                var percentProgress = 50;
+            }
+
             response.render('submissions', { submissions: sortedSubmissions, scoreDistribution: scoreDistribution, percentProgress: percentProgress})
         })
 })

@@ -1,9 +1,6 @@
 extends _layout-with-navigation
 block content
     h1 Submissions
-    if userHasRole('reviewer')
-        .progress
-            .progress-bar(style="width: " + percentProgress + "%")
     table.table.table-striped
         tr
             th Name
@@ -33,10 +30,10 @@ block content
                     td
                         a(href="/submission/delete/" + submission._id) Delete
     if userHasRole('reviewer')
-        h2 Graphs
-        p Graphs are fun!
-
-        p Aim for an even distribution of ratings and no 🌚
+        h2 Progress: #{Math.round(percentProgress)}%
+        .progress
+            .progress-bar(style="width: " + percentProgress + "%")
+        h2 Score Distribution
         script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js")
         script(type="text/javascript").
             google.charts.load('current', {'packages':['corechart']})
