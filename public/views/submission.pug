@@ -10,17 +10,20 @@ block content
     if description
         p=description
     else
-        p.text-danger (No description provided)
+        p.text-danger (No description)
 
     h2 Submission Videos
     if(videoNotes)
         p
             strong Note: 
             | #{videoNotes}
-    .list-group
-        each videoUrl in videoUrls
-            p
-                a(href="" + videoUrl target="_blank")=videoUrl
+    if (videoUrls.length > 0)
+        .list-group
+            each videoUrl in videoUrls
+                p
+                    a(href="" + videoUrl target="_blank")=videoUrl
+    else
+        p.text-danger (No videos)
 
     if userHasRole('reviewer')
         h2 Your Score
