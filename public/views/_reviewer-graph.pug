@@ -1,0 +1,32 @@
+h2 Score Distribution
+script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js")
+script(type="text/javascript").
+    google.charts.load('current', {'packages':['corechart']})
+    google.charts.setOnLoadCallback(drawChart)
+    var scoreDistribution = [#{scoreDistribution}]
+    console.log(scoreDistribution)
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Score', 'Number of Scores'],
+            ['⭐️⭐️⭐️⭐️', scoreDistribution[4]],
+            ['⭐️⭐️⭐️🔸', scoreDistribution[3]],
+            ['⭐️⭐️🔸🔸', scoreDistribution[2]],
+            ['⭐️🔸🔸🔸', scoreDistribution[1]],
+            ['🔸🔸🔸🔸', scoreDistribution[0]],
+            ['🌚',        scoreDistribution[5]]
+        ])
+        var username = '#{user.username}'
+        var options = { 
+            slices: [ 
+                {color: '#FF0000'},
+                {color: '#AF004F'}, 
+                {color: '#7F007F'},
+                {color: '#4C00B2'},
+                {color: '#0700FF'},
+                {color: '#000000'}
+            ] 
+        }
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'))
+        chart.draw(data, options)
+    }
+#piechart.center-block(style="width: 900px; height: 500px;")

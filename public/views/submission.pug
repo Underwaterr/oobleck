@@ -1,7 +1,11 @@
 extends _layout-with-navigation
 block content
-    p
-        a(href="/submissions") ← Submissions
+    ol.breadcrumb
+        li
+            a(href="/") Home
+        li
+            a(href="/submissions") Submissions
+        li.active Submission
     h1=name 
         if userHasRole('admin')
             span.small.code &nbsp;[#{_id}]
@@ -53,3 +57,29 @@ block content
                 textarea(name="notes").form-control #{review?review.notes:''}
 
             button.btn.btn-primary(type="submit") Save Review
+            | &nbsp;
+            a.btn.btn-default(type="submit" href="/submissions") Cancel
+
+    if userHasRole('admin')
+        h2 Reviews
+        table.table.table-striped
+            thead
+                th User
+                th Score
+                th Notes
+            tbody
+                each review in reviews
+                    tr
+                        td #{review.username}
+                        td
+                            +showStars(review.score)
+                        td #{review.notes}
+
+mixin showStars(numberOfStars)
+    -var counter = 0
+    while counter < numberOfStars
+        | ⭐️
+        -counter++
+    while counter < 4
+        | 🔸
+        -counter++

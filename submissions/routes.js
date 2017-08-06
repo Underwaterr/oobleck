@@ -72,6 +72,7 @@ router.post('/review/:submissionId', mustBeLoggedIn, mustBeRole('reviewer'), mus
     const submissionId = request.params.submissionId
     const review = { 
         userId: request.user._id,
+        username: request.user.username,
         score:  request.body.score, 
         notes:  request.body.notes 
     }

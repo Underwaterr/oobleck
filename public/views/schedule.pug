@@ -1,0 +1,77 @@
+extends _layout-with-navigation
+block content
+    style.
+        .container { width: 95%; }
+
+    #app
+        .row
+            .col-lg-12
+                day(v-for="day in days", :day="day", :stages="stages", :events="events[day]")
+
+    #new-event-modal.modal.fade
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button" data-dismiss="modal")
+                        span &times;
+                    h4.modal-title New Event
+                .modal-body
+                    .form-group
+                        label Event Name (Optional)
+                        input.form-control(type="text")
+                    .form-group
+                        label Day
+                        select.form-control
+                            each day in days
+                                option #{day}
+                    .form-group
+                        label Time
+                        p.help-block Must be in hh:mm format
+                        input.form-control.code(type="time" value="00:00" v-model="event.time")
+                    .form-group
+                        label Stage
+                        select.form-control
+                            each stage in stages
+                                option #{stage}
+                    .form-group
+                        label Acts
+                        ul.list-group
+                            li.list-group-item PGraph
+                                a(href="#").pull-right.text-danger remove
+                            li.list-group-item Frank Mills
+                    .form-group
+                        label Add new act
+                        .input-group
+                            select.form-control
+                                each act in acts
+                                    option #{act}
+                            .input-group-btn
+                                button.btn.btn-default(type="button") Add Act
+                .modal-footer
+                    button.btn.btn-default(type="button" data-dismiss="modal") Cancel
+                    button.btn.btn-primary(type="button") Save
+
+    script#day-template(type="text/x-template")
+        .panel.panel-primary
+            .panel-heading
+                h2 {{ day }}
+                button(@click="clicky")
+            .panel-body.schedule
+                stage(v-for="stage in stages", :stage="stage", :events="events[stage]")
+
+    script#stage-template(type="text/x-template")
+        .panel.panel-default
+            .panel-heading 
+                h4 {{ stage }}
+                p.list-group-item-text.small
+                    a(href="#" data-toggle="modal" data-target="#new-event-modal") &plus; new event
+            ul.list-group(v-for="event in events")
+                event(:event="event")
+
+    script#event-template(type="text/x-template")
+        a.list-group-item(href="#" data-toggle="modal" data-target="#new-event-modal")
+            h4.list-group-item-heading {{ event.time }}
+            p.list-group-item-text(v-for="act in event.acts") {{ act }}
+
+block scripts
+    script(src="/js/schedule.js" defered) 

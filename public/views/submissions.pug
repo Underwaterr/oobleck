@@ -1,5 +1,10 @@
 extends _layout-with-navigation
 block content
+    ol.breadcrumb
+        li
+            a(href="/") Home
+        li.active Submissions
+    
     h1 Submissions
     table.table.table-striped
         tr
@@ -29,33 +34,11 @@ block content
                         | #{submission._id}
                     td
                         a(href="/submission/delete/" + submission._id) Delete
+    h2 Progress: #{Math.round(percentProgress)}%
+    .progress
+        .progress-bar(style="width: " + percentProgress + "%")                        
     if userHasRole('reviewer')
-        h2 Progress: #{Math.round(percentProgress)}%
-        .progress
-            .progress-bar(style="width: " + percentProgress + "%")
-        h2 Score Distribution
-        script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js")
-        script(type="text/javascript").
-            google.charts.load('current', {'packages':['corechart']})
-            google.charts.setOnLoadCallback(drawChart)
-            let scoreDistribution = [#{scoreDistribution}]
-            console.log(scoreDistribution)
-            function drawChart() {
-                let data = google.visualization.arrayToDataTable([
-                    ['Score', 'Number of Scores'],
-                    ['⭐️⭐️⭐️⭐️', scoreDistribution[4]],
-                    ['⭐️⭐️⭐️🔸', scoreDistribution[3]],
-                    ['⭐️⭐️🔸🔸', scoreDistribution[2]],
-                    ['⭐️🔸🔸🔸', scoreDistribution[1]],
-                    ['🔸🔸🔸🔸', scoreDistribution[0]],
-                    ['🌚',        scoreDistribution[5]]
-                ])
-                let username = '#{user.username}'
-                let options = { title: username + ' Score Distribution' }
-                let chart = new google.visualization.PieChart(document.getElementById('piechart'))
-                chart.draw(data, options)
-            }
-        #piechart(style="width: 900px; height: 500px;")
+        include _reviewer-graph
 
 mixin showStars(numberOfStars)
     -var counter = 0

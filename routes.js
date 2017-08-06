@@ -4,6 +4,7 @@ const superagent = require('superagent')
 
 router.use(require('./routes/new-user'))
 router.use(require('./routes/login'))
+router.use(require('./routes/schedule'))
 router.use(require('./routes/users'))
 router.use(require('./submissions/routes'))
 router.use(require('./public-submission-form/routes'))

@@ -1,17 +1,29 @@
 /* Push body down underneath navbar */
 body { padding-top: 70px; }
 
+/* This should be the default value tbh */
 textarea { resize: vertical; }
 
+/* Helper class for when I want *monospacing*! */
 .code { font-family: monospace; }
 
+/* Add a sweet divide on the collapsed navbar */
 .navbar-collapse hr { 
     margin: 0; 
     border-top:     1px solid #149C82;
     border-bottom:  1px solid #30C3A6;
 }
 
+/* Formatting the 'user' section of the navbar */
 .user-info { font-style: italic; padding-left: 15px; }
 .username { font-weight: bold; }
 .role:before { content: '(' ); }
 .role:after  { content: ')' ); }
+
+/* Schedule Page Flexin' */
+.schedule { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: space-around;
+    align-items: flex-start;
+}

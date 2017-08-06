@@ -1,0 +1,73 @@
+extends _layout-with-navigation
+block content
+    .row
+        .col-lg-12
+            each day in days
+                .panel.panel-primary
+                    .panel-heading
+                        h2 #{day}
+                    .panel-body.schedule
+                        each stage, stageIndex in stages
+                            .panel.panel-default
+                                .panel-heading 
+                                    h4 #{stage}
+                                    p.list-group-item-text.small
+                                        a(
+                                            href="#" + stage.replace(/\W+/g, '-').toLowerCase()
+                                            data-toggle="modal" data-target="#new-event-modal") 
+                                            | &plus; new event
+                                ul.list-group
+                                    each event in events
+                                        if event.day == day && event.stage == stageIndex
+                                            a.list-group-item(href="#")
+                                                h4.list-group-item-heading #{event.time}
+                                                if event.name
+                                                    p.list-group-item-text
+                                                        strong.text-info #{event.name}
+                                                each act in event.acts
+                                                    p.list-group-item-text #{act}
+
+
+
+    #new-event-modal.modal.fade
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button" data-dismiss="modal")
+                        span &times;
+                    h4.modal-title New Event
+                .modal-body
+                    .form-group
+                        label Event Name (Optional)
+                        input.form-control(type="time" autofocus)
+                    .form-group
+                        label Day
+                        select.form-control
+                            each day in days
+                                option #{day}
+                    .form-group
+                        label Time
+                        p.help-block Must be in hh:mm format
+                        input.form-control.code(type="time" value="00:00")
+                    .form-group
+                        label Stage
+                        select.form-control
+                            each stage in stages
+                                option #{stage}
+                    .form-group
+                        label Acts
+                        ul.list-group
+                            li.list-group-item PGraph
+                                a(href="#").pull-right.text-danger remove
+                            li.list-group-item Frank Mills
+                    .form-group
+                        label Add new act
+                        .input-group
+                            select.form-control
+                                each act in acts
+                                    option #{act}
+                            .input-group-btn
+                                button.btn.btn-default(type="button") Add Act
+                .modal-footer
+                    button.btn.btn-default(type="button" data-dismiss="modal") Cancel
+                    button.btn.btn-primary(type="button") Save

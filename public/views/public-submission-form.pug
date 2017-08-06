@@ -2,12 +2,12 @@ extends _layout-without-navigation
 block content
     style(type="text/css").
         body { background-color: #2c3e50; }
-    .row
-        .col-sm-6.col-sm-offset-3
-            .panel.panel-default
-                .panel-body
-                    h2 Submission Form
-                    form(action="/public-submission-form" method="POST")
+    form(action="/public-submission-form" method="POST")
+        .row
+            .col-sm-8.col-sm-offset-2
+                .panel.panel-default
+                    .panel-body
+                        h2 Submission Details
                         .form-group
                             h3
                                 label Act Name
@@ -15,13 +15,39 @@ block content
                         .form-group
                             h3
                                 label Description
-                            p.help-block Explain, in technical terms, what your act is. 
-                            input.form-control(type="text" name="description")
+                            p.help-block Explain to us, in technical terms, what your act is. 
+                                a(href="#") Here is an example.
+                            textarea.form-control(rows="4" name="description")
+                        .form-group
+                            h3
+                                label Act Type
+                            select.form-control(name="type")
+                                option Improv
+                                option Stand Up
+                                option Sketch
+                                option Other
+                        //.form-group
+                            p.help-block Specify "Other" Act Type (Ex. Podcast, Music)
+                            input.form-control(type="text" name="type-other")
+                        .form-group
+                            h3 
+                                label Where Are You From?
+                            .form-group
+                                label City
+                                input.form-control(type="text" name="city")
+                            .form-group
+                                label State / Region
+                                input.form-control(type="text" name="stateOrRegion")
+                            .form-group
+                                label Country (if outside of the United States)
+                                input.form-control(type="text" name="country")
                         .form-group
                             h3
                                 label URLs to Videos
-                            p.help-block Only one video is required.
-                            p.help-block The video should be less than one year old.
+                            .help-block
+                                p Please paste a valid URL to a video of your act for review.
+                                p Only one video is required.
+                                p The video should be less than one year old.
                             .form-group
                                 .input-group
                                     input.form-control.code(type="text" name="videoUrls[]")
@@ -34,9 +60,88 @@ block content
                                         button.btn.btn-default(type="button") remove
                             .form-group
                                 button#clicky.btn.btn-default(type="button") Add Additional Video Link
+                            .form-group
+                                p.help-block Any passwords we need to know? Should we skip ahead by 30 minutes?
+                                input.form-control(type="text" name="videoNotes")
                         .form-group
                             h3
-                                label Special Considerations for Videos
-                            p.help-block Any passwords we need to know? Should we skip ahead by 30 minutes?
-                            input.form-control(type="text" name="videoNotes")
-                        button.btn.btn-primary(type="submit") Submit Act
+                                label Availability
+                            p.help-block Please check which days you are available to perform.
+                            .checkbox
+                                label
+                                    input(type="checkbox")
+                                    | Tuesday 
+                            .checkbox
+                                label
+                                    input(type="checkbox")
+                                    | Wednesday
+                            .checkbox
+                                label
+                                    input(type="checkbox")
+                                    | Thursday
+                            .checkbox
+                                label
+                                    input(type="checkbox")
+                                    | Friday
+                            .checkbox
+                                label
+                                    input(type="checkbox")
+                                    | Saturday
+                            .checkbox
+                                label
+                                    input(type="checkbox")
+                                    | Sunday
+                            .checkbox
+                                label
+                                    input(type="checkbox")
+                                    | Monday
+                            .form-group
+                                p.help-block To prevent scheduling conflicts during the festival, what other acts are any of your members submitting?
+                                textarea.form-control(rows="4" name="conflicts")
+        .row
+            .col-sm-8.col-sm-offset-2
+                .panel.panel-default
+                    .panel-body
+                        h2 Public Profile
+                        p Upon acceptance to the festival, this is what your public-facing profile will show.
+                        .form-group
+                            h3
+                                label Upload Photo
+                            p.help-block Something big, pretty &amp; professional, please!
+                            .form-control
+                                input(type="file")
+                        .form-group
+                            h3
+                                label Bio
+                            .help-block 
+                                p This will be published, verbatim, for the world to see!
+                                p If needed, you'll be able to update this later.
+                                textarea.form-control(rows="4")
+                        .form-group
+                            h3
+                                label Social Media URLs
+                            p.help-block Totally optional! To help with promotion. 
+                            .form-group
+                                label Website
+                                input.form-control.code(type="text" name="socialMediaUrls[]")
+                            .form-group
+                                label Twitter
+                                input.form-control.code(type="text" name="socialMediaUrls[]")
+                            .form-group
+                                label Instagram
+                                input.form-control.code(type="text" name="socialMediaUrls[]")
+                            .form-group
+                                label Facebook
+                                input.form-control.code(type="text" name="socialMediaUrls[]")
+        .row
+            .col-sm-8.col-sm-offset-2
+                .panel.panel-default
+                    .panel-body
+                        h2 Payment
+                        p Do this: 
+                            a(href="https://www.paypal.com/us/cgi-bin/webscr?cmd=p/acc/ipn-info-outside") PayPal IPN
+        .row
+            .col-sm-8.col-sm-offset-2
+                .panel.panel-default
+                    .panel-body
+                        button.btn.btn-primary.btn-block.btn-lg(type="submit") Submit Act
