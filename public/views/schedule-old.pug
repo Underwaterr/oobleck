@@ -20,14 +20,12 @@ block content
                                     each event in events
                                         if event.day == day && event.stage == stageIndex
                                             a.list-group-item(href="#")
-                                                h4.list-group-item-heading #{event.time}
+                                                h4.list-group-item-heading #{event.time} 
                                                 if event.name
                                                     p.list-group-item-text
                                                         strong.text-info #{event.name}
                                                 each act in event.acts
                                                     p.list-group-item-text #{act}
-
-
 
     #new-event-modal.modal.fade
         .modal-dialog
@@ -37,37 +35,52 @@ block content
                         span &times;
                     h4.modal-title New Event
                 .modal-body
-                    .form-group
-                        label Event Name (Optional)
-                        input.form-control(type="time" autofocus)
-                    .form-group
-                        label Day
-                        select.form-control
-                            each day in days
-                                option #{day}
-                    .form-group
-                        label Time
-                        p.help-block Must be in hh:mm format
-                        input.form-control.code(type="time" value="00:00")
-                    .form-group
-                        label Stage
-                        select.form-control
-                            each stage in stages
-                                option #{stage}
-                    .form-group
-                        label Acts
-                        ul.list-group
-                            li.list-group-item PGraph
-                                a(href="#").pull-right.text-danger remove
-                            li.list-group-item Frank Mills
-                    .form-group
-                        label Add new act
-                        .input-group
-                            select.form-control
-                                each act in acts
-                                    option #{act}
-                            .input-group-btn
-                                button.btn.btn-default(type="button") Add Act
+                    ul.nav.nav-tabs(style="margin-bottom: 15px")
+                        li.active
+                            a(href="#basic" data-toggle="tab") Basic
+                        li
+                            a(href="#advanced" data-toggle="tab") Advanced
+                    .tab-content
+                        #basic.tab-pane.active
+                            .form-group
+                                label Time
+                                p.help-block Must be in hh:mm format
+                                input.form-control.code(type="time" value="00:00")
+                            .form-group
+                                label Day
+                                select.form-control
+                                    each day in days
+                                        option #{day}
+                            .form-group
+                                label Stage
+                                select.form-control
+                                    each stage in stages
+                                        option #{stage}
+                            .form-group
+                                label Acts
+                                ul.list-group
+                                    li.list-group-item PGraph
+                                        a(href="#").pull-right.text-danger remove
+                                    li.list-group-item Frank Mills
+                            .form-group
+                                label Add new act
+                                .input-group
+                                    select.form-control
+                                        each act in acts
+                                            option #{act}
+                                    .input-group-btn
+                                        button.btn.btn-default(type="button") Add Act
+                        #advanced.tab-pane
+                            p.help-block (All fields optional)
+                            .form-group
+                                label Event Name
+                                input.form-control(type="text" autofocus)
+                            .form-group
+                                label Host
+                                input.form-control(type="text" autofocus)
+                            .form-group
+                                label Photographer
+                                input.form-control(type="text" autofocus)
                 .modal-footer
                     button.btn.btn-default(type="button" data-dismiss="modal") Cancel
                     button.btn.btn-primary(type="button") Save

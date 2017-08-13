@@ -5,7 +5,7 @@ block content
             a(href="/") Home
         li
             a(href="/submissions") Submissions
-        li.active Submission
+        li.active=name
     h1=name 
         if userHasRole('admin')
             span.small.code &nbsp;[#{_id}]
